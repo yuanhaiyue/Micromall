@@ -32,8 +32,10 @@ public class OrderController {
     }
     @PostMapping("/create")
     public JSONResult createOrder(@RequestBody @Validated CreateOrder createOrder){
-        return JSONResult.ok();
+        return orderService.createOrder(createOrder);
     }
+
+
 //    @GetMapping("/details")
 //    public OrderVo  selectOrder(Integer id){
 //        Orders orders= orderService.selectById(id);

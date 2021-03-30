@@ -51,7 +51,7 @@ public class Orders {
     @ManyToOne
     private User buyer;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "orders",cascade = CascadeType.REMOVE)
     private Set<OrderGoods> orderGoods;
 
 
