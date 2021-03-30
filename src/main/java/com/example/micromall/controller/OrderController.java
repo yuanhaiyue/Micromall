@@ -5,6 +5,7 @@ package com.example.micromall.controller;
 import com.example.micromall.entity.Orders;
 import com.example.micromall.service.OrderService;
 import com.example.micromall.utils.CreateOrder;
+import com.example.micromall.utils.JSONResult;
 import com.example.micromall.utils.Results;
 import lombok.Data;
 
@@ -30,8 +31,8 @@ public class OrderController {
         this.orderService = orderService;
     }
     @PostMapping("/create")
-    public Results createOrder(@RequestBody @Validated CreateOrder createOrder){
-       return orderService.createOrder(createOrder);
+    public JSONResult createOrder(@RequestBody @Validated CreateOrder createOrder){
+        return JSONResult.ok();
     }
 //    @GetMapping("/details")
 //    public OrderVo  selectOrder(Integer id){
