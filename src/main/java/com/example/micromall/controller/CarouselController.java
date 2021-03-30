@@ -2,6 +2,7 @@ package com.example.micromall.controller;
 
 import com.example.micromall.entity.Carousel;
 import com.example.micromall.service.CarouselService;
+import com.example.micromall.utils.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +25,8 @@ public class CarouselController {
     }
 
     @GetMapping("/list")
-    public List<Carousel> selectAll(){
-        return carouselService.select();
+    public JSONResult selectAll(){
+        return JSONResult.ok(carouselService.select());
     }
 
 

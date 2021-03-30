@@ -15,5 +15,4 @@ import java.util.List;
 @Repository
 public interface ContactRepository extends BaseMapper<Contact> {
 
-
 }

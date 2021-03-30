@@ -33,58 +33,18 @@ public class OrderController {
     public Results createOrder(@RequestBody @Validated CreateOrder createOrder){
        return orderService.createOrder(createOrder);
     }
-    @GetMapping("/details")
-    public OrderVo  selectOrder(Integer id){
-        Orders orders= orderService.selectById(id);
-        return OrderVo.filter(orders);
-    }
-
-    @GetMapping("/list")
-    public List<OrderVo> selectList(Integer buyerId){
-        return orderService.selectList(buyerId).stream().map(OrderVo::filter).collect(Collectors.toList());
-    }
-
-
-
-    @Data
-    public static class OrderVo{
-        private String state;
-        private String remarks;
-        private Integer freight;
-        private Integer amount;
-        private Integer createTime;
-        private OrderBuyer buyer;
-        private OrderProduct product;
-
-        public static OrderVo filter(Orders orders){
-            OrderVo orderVo=new OrderVo();
-            orderVo.setState(orders.getStates());
-            orderVo.setAmount(orders.getAmount());
-            orderVo.setRemarks(orders.getRemarks());
-            orderVo.setFreight(orders.getFreight());
-            orderVo.setCreateTime(orders.getCreateTime());
-            OrderBuyer buyer=new OrderBuyer();
-            buyer.setId(orders.getBuyer().getId());
-            buyer.setName(orders.getBuyer().getName());
-            OrderProduct product=new OrderProduct();
-            product.setId(orders.getProduct().getId());
-            product.setName(orders.getProduct().getName());
-            orderVo.setBuyer(buyer);
-            orderVo.setProduct(product);
-            return orderVo;
-        }
+//    @GetMapping("/details")
+//    public OrderVo  selectOrder(Integer id){
+//        Orders orders= orderService.selectById(id);
+//        return OrderVo.filter(orders);
+//    }
+//
+//    @GetMapping("/list")
+//    public List<OrderVo> selectList(Integer buyerId){
+//        return orderService.selectList(buyerId).stream().map(OrderVo::filter).collect(Collectors.toList());
+//    }
 
 
 
-    }
-    @Data
-    private static class OrderBuyer{
-        private Integer id;
-        private String name;
-    }
-    @Data
-    private static class OrderProduct{
-        private Integer id;
-        private String name;
-    }
+
 }

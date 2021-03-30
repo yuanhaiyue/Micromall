@@ -5,6 +5,7 @@ import com.example.micromall.entity.Contact;
 import com.example.micromall.entity.User;
 import com.example.micromall.service.ContactService;
 import com.example.micromall.utils.CreateContact;
+import com.example.micromall.utils.JSONResult;
 import com.example.micromall.utils.Results;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -32,19 +34,36 @@ public class ContactController {
     }
 
     @GetMapping("/list")
-    public List<Contact> selectAll(Integer userId){
-        return contactService.selectAll(userId);
+    public JSONResult selectAll(Integer userId){
+        return JSONResult.ok(contactService.selectAll(userId));
     }
 
 
-    @PostMapping("/create")
-    public Results createContact(@RequestBody CreateContact contact){
-        return contactService.createContact(contact);
+    @PostMapping("/save")
+    public JSONResult saveContact(@RequestBody Contact contact, HttpSession session){
+        if (contact.getId()!=null){
+            return contactService.updateContact(contact,session);
+        }
+        return contactService.createContact(contact,session);
     }
 
-    @PostMapping("/update")
-    public Results updateContact(Contact contact){
-        return contactService.updateContact(contact);
+    @GetMapping("/edit")
+    public JSONResult editContact(Integer id){
+        return JSONResult.ok(contactService.editContact(id));
     }
+
+
+    @PostMapping("/delete")
+    public JSONResult deleteContact(Integer id){
+
+        return contactService.delete(id);
+    }
+
+    @GetMapping("/dev")
+    public JSONResult devContact(){
+        return JSONResult.ok(contactService.getDev(1));
+    }
+
+
 }
 

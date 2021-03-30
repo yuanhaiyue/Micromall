@@ -1,10 +1,12 @@
 package com.example.micromall.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 /**
  * @author 14760
@@ -25,12 +27,19 @@ public class Contact {
     private String name;
 
     private String phoneNumber;
+
+    private String detail;
+
+    private Date createTime;
+
+    private Date updateTime;
+
     @JsonIgnore
-    @JoinColumn(name = "user_id")
+    @TableField(value = "user_id")
     @ManyToOne
     private User user;
 
-
-
+    @Transient
+    private Integer userId;
 
 }

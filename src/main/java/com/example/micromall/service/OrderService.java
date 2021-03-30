@@ -39,20 +39,7 @@ public class OrderService {
     }
 
     public Results createOrder(CreateOrder createOrder){
-        Orders orders =new Orders();
-        orders.setAmount(createOrder.getAmount());
-        User user=userRepository.findById(createOrder.getBuyerId()).get();
-        Product product=productRepository.findById(createOrder.getProductId()).get();
-        orders.setRemarks(createOrder.getRemarks());
-        orders.setBuyer(user);
-        orders.setProduct(product);
-        orders.setStates("未支付");
-        orders.setFreight(createOrder.getFreight());
-        orders.setTotal(product.getPrice()*createOrder.getAmount()+createOrder.getFreight());
-        Orders savaOrder=repository.save(orders);
-        if (savaOrder!=null){
-            return new Results("购买成功", 200);
-        }
+
         return  new Results("创建订单失败", 400);
 
     }

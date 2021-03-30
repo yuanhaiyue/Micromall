@@ -22,7 +22,9 @@ public  class CreateContact{
     @NotBlank(message = "不能为空")
     private String phoneNumber;
     @NotBlank(message = "不能为空")
-    private Integer userId;
+    private String detail;
+
+    private Integer id;
 
     public  Contact getContact(User user){
         Contact contact=new Contact();

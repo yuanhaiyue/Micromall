@@ -7,12 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import java.util.Set;
 
 /**
  * @author 14760
@@ -29,12 +28,29 @@ public class User {
     private  Integer id;
     @NotNull
     private String name;
+
+    @Email
+    private String email;
+
+
     @JsonIgnore
     @NotNull
     private String password;
 
-    public User(String name, String password) {
-        this.name = name;
+    public User(String username, String password,String email) {
+        this.name = username;
         this.password = password;
+        this.email=email;
     }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "buyer",cascade = CascadeType.DETACH)
+    Set<Orders> orders;
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",cascade = CascadeType.DETACH)
+    Set<Contact> contacts;
+
+
 }

@@ -24,7 +24,7 @@ public class Carousel {
     @Null(groups = Create.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
+
     private Integer id;
 
     private String image;

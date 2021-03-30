@@ -1,16 +1,24 @@
-package com.minishop.demo.utils;
+package com.example.micromall.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import lombok.Setter;
 
 
+
+/**
+ * @author 14760
+ */
+@Getter
+@Setter
 public class JSONResult {
 
     // 定义jackson对象
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     // 响应业务状态
-    private Integer status;
+    private Integer code;
 
     // 响应消息
     private String msg;
@@ -20,6 +28,14 @@ public class JSONResult {
     
     @JsonIgnore
     private String ok;	// 不使用
+
+
+
+
+
+
+
+
 
     public static JSONResult build(Integer status, String msg, Object data) {
         return new JSONResult(status, msg, data);
@@ -32,13 +48,15 @@ public class JSONResult {
     public static JSONResult ok(Object data) {
         return new JSONResult(data);
     }
-
+    public static JSONResult ok(Object data,String msg) {
+        return new JSONResult(data,msg);
+    }
     public static JSONResult ok() {
         return new JSONResult(null);
     }
     
     public static JSONResult errorMsg(String msg) {
-        return new JSONResult(500, msg, null);
+        return new JSONResult(400, msg, "");
     }
     
     public static JSONResult errorMap(Object data) {
@@ -61,35 +79,41 @@ public class JSONResult {
 
     }
 
-    public JSONResult(Integer status, String msg, Object data) {
-        this.status = status;
+    public JSONResult(Integer code, String msg, Object data) {
+        this.code = code;
         this.msg = msg;
         this.data = data;
     }
     
-    public JSONResult(Integer status, String msg, Object data, String ok) {
-        this.status = status;
+    public JSONResult(Integer code, String msg, Object data, String ok) {
+        this.code = code;
         this.msg = msg;
         this.data = data;
         this.ok = ok;
     }
 
     public JSONResult(Object data) {
-        this.status = 200;
+        this.code = 200;
         this.msg = "OK";
         this.data = data;
     }
+    public JSONResult(Object data,String msg) {
+        this.code = 200;
+        this.msg = "OK";
+        this.data = data;
+        this.msg=msg;
+    }
 
     public Boolean isOK() {
-        return this.status == 200;
+        return this.code == 200;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
     public String getMsg() {
