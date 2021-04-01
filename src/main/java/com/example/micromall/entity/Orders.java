@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -51,7 +52,7 @@ public class Orders {
     @ManyToOne
     private User buyer;
 
-    @OneToMany(mappedBy = "orders",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "orders",cascade = {CascadeType.REMOVE,CascadeType.PERSIST},fetch = FetchType.EAGER)
     private Set<OrderGoods> orderGoods;
 
 

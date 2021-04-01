@@ -28,13 +28,16 @@ public class NewsService {
 //    }
     public List<News> selectNews(){
         QueryWrapper<News> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("image","id","title","hits","create_time");
+        queryWrapper.select("image","id","title","hits","create_time","abstracts");
+
         return newsRepository.selectList(queryWrapper);
     }
 
 
     public News selectNewsId(Integer id){
-        News news= newsRepository.selectById(id);
+        QueryWrapper<News> queryWrapper=new QueryWrapper<>();
+        queryWrapper.select("image","id","title","hits","create_time","content").eq("id", id);
+        News news= newsRepository.selectOne(queryWrapper);
         UpdateWrapper<News> updateWrapper=new UpdateWrapper<>();
         updateWrapper.set("hits",news.getHits()+1).eq("id", id);
         newsRepository.update(null,updateWrapper);

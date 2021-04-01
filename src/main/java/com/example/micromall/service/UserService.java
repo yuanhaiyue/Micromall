@@ -31,10 +31,11 @@ public class UserService {
     }
 
     public User createUser(User user){
-        if (StringUtils.isNotEmpty(user.getName())){
+        if (StringUtils.isEmpty(user.getName())){
+
             throw new RuntimeException("用户名为空");
         }
-        if (StringUtils.isNotEmpty(user.getPassword())){
+        if (StringUtils.isEmpty(user.getPassword())){
             throw new RuntimeException("密码不能为空");
         }
        return userRepository.save(user);

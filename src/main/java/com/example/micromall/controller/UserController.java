@@ -20,7 +20,7 @@ import java.util.Map;
  */
 
 @Validated
-@RequestMapping("/users")
+@RequestMapping("/user")
 @RestController
 public class UserController {
 

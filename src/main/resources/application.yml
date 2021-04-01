@@ -7,28 +7,32 @@ spring:
 
 
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: update
 
     properties:
       hibernate:
         enable_lazy_load_no_trans: true
-        use_sql_comments: true
-        ormat_sql: true
-        type: TRACE
+    show-sql: true
 
 
   jackson:
+    property-naming-strategy : CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
     time-zone: Asia/Shanghai
     date-format: yyyy-MM-dd HH:mm:ss
+#    default-property-inclusion: non_null
 server:
   port: 8080
   servlet:
     context-path:
 logging:
   level:
+
     root: warn
     com.example.micromall.repository: trace
   pattern:
     console: '%p%m%n'
+
+
+spring.jpa.properties.hibernate.use_sql_comments: true
+spring.jpa.properties.hibernate.format_sql: true

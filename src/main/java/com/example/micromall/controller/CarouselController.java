@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author 14760
  */
-@RequestMapping("/carousel")
+@RequestMapping("/image")
 @RestController
 public class CarouselController {
     final CarouselService carouselService;

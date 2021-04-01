@@ -11,6 +11,7 @@ import com.example.micromall.utils.JSONResult;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,11 +37,13 @@ public class ContactService {
     }
 
     public JSONResult createContact(Contact contact, HttpSession session){
-        User user=userRepository.findById(1).get();
-        contact.setUser(user);
+        contact.setUserId(1);
+        contact.setCreateTime(new Date(System.currentTimeMillis()));
         int cnt=contactRepository.insert(contact);
+        Map<String,Object> map=new HashMap<>();
+        map.put("id", contact.getId());
         if (cnt!=0){
-           return JSONResult.ok(contact.getId(), "添加成功");
+           return JSONResult.ok(map, "添加成功");
         }
         return JSONResult.errorMsg("添加失败");
 
@@ -48,8 +51,10 @@ public class ContactService {
 
     public JSONResult updateContact(Contact contact,HttpSession session){
         int cnt=contactRepository.updateById(contact);
+        Map<String,Object> map=new HashMap<>();
+        map.put("id", contact.getId());
         if (cnt!=0){
-            return JSONResult.ok(contact.getId(), "更新成功");
+            return JSONResult.ok(map, "更新成功");
         }
         return JSONResult.errorMsg("更新失败");
 

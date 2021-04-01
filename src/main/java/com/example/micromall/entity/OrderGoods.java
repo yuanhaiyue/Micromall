@@ -61,9 +61,8 @@ public class OrderGoods {
 
     }
     public static Set<OrderGoods> setOrderGoods(Set<CreateOrder.OrderCreateGoods> orderCreateGoods){
-        Set<CreateOrder.OrderCreateGoods> orderGoodsSet=new HashSet<>();
         Set<OrderGoods> goodsSet=new HashSet<>();
-        for (CreateOrder.OrderCreateGoods goods:orderGoodsSet){
+        for (CreateOrder.OrderCreateGoods goods:orderCreateGoods){
             OrderGoods orderGoods=new OrderGoods();
             Product product= goods.getProducts();
             orderGoods.setProduct(product);

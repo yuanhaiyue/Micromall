@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.micromall.entity.News;
 import com.example.micromall.repository.NewsRepository;
 import com.example.micromall.service.NewsService;
+import com.example.micromall.utils.JSONResult;
+import com.example.micromall.utils.NewsResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,13 +36,13 @@ public class NewsController {
 //    }
 
     @GetMapping("/detail")
-    public News selectById(Integer id){
-        return newsService.selectNewsId(id);
+    public NewsResult selectById(Integer id){
+        return NewsResult.ok(newsService.selectNewsId(id));
     }
 
     @GetMapping("/list")
-    public List<News> selectAll(){
-        return newsService.selectNews();
+    public NewsResult selectAll(){
+        return NewsResult.ok(newsService.selectNews());
 
     }
 

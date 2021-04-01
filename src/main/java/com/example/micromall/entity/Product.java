@@ -31,8 +31,7 @@ public class Product {
     private String name;
     private String image;
     private Integer price;
-    private String parameter;
-    private String details;
+
 
     private String sellPoint;
     private Integer num;

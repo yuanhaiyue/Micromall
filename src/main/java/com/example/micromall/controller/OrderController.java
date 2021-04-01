@@ -2,12 +2,10 @@ package com.example.micromall.controller;
 
 
 
-import com.example.micromall.entity.Orders;
 import com.example.micromall.service.OrderService;
 import com.example.micromall.utils.CreateOrder;
 import com.example.micromall.utils.JSONResult;
-import com.example.micromall.utils.Results;
-import lombok.Data;
+
 
 
 import org.springframework.validation.annotation.Validated;
@@ -36,18 +34,20 @@ public class OrderController {
     }
 
 
-//    @GetMapping("/details")
-//    public OrderVo  selectOrder(Integer id){
-//        Orders orders= orderService.selectById(id);
-//        return OrderVo.filter(orders);
-//    }
-//
-//    @GetMapping("/list")
-//    public List<OrderVo> selectList(Integer buyerId){
-//        return orderService.selectList(buyerId).stream().map(OrderVo::filter).collect(Collectors.toList());
-//    }
+    @GetMapping("/details")
+    public JSONResult  selectOrder(Integer id){
+        return orderService.selectById(id);
+    }
 
+    @GetMapping("/list")
+    public JSONResult selectList(){
+        return orderService.selectList();
+    }
 
+    @PostMapping("/delete")
+    public JSONResult deleteOrders(Integer id){
+        return orderService.deleteOrders(id);
+    }
 
 
 }

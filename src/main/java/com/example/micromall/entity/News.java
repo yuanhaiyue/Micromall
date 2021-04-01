@@ -1,15 +1,12 @@
 package com.example.micromall.entity;
 
 
-import com.baomidou.mybatisplus.annotation.FieldStrategy;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.sql.Date;
 
 /**
  * @author 14760
@@ -17,6 +14,7 @@ import java.sql.Date;
 @Setter
 @Getter
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +23,7 @@ public class News {
 
     private String image;
 
-
+    private String abstracts;
     private String content;
 
     private Integer hits;

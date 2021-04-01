@@ -38,7 +38,7 @@ public class ProductController {
 
 
     @GetMapping("/list")
-    public JSONResult selectBySubCategoryId(Integer subCategoryId, @RequestParam(value = "last_id",defaultValue = "0") Integer lastId){
+    public JSONResult selectBySubCategoryId(@RequestParam(value = "sub_category_id") Integer subCategoryId, @RequestParam(value = "last_id",defaultValue = "0") Integer lastId){
         return JSONResult.ok(productService.selectProduct(subCategoryId).stream().map(ProductVo::change));
     }
 

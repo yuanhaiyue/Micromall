@@ -3,6 +3,7 @@ package com.example.micromall.entity;
 import com.example.micromall.utils.Create;
 import com.example.micromall.utils.Update;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+
 public class User {
     @NotNull(groups = Update.class)
     @Null(groups = Create.class)
@@ -33,7 +35,7 @@ public class User {
     private String email;
 
 
-    @JsonIgnore
+    @JsonValue
     @NotNull
     private String password;
 
