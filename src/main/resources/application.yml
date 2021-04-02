@@ -4,8 +4,8 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/micromall?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 20001218
-
-
+  session:
+    store-type: jdbc
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,6 +25,8 @@ server:
   port: 8080
   servlet:
     context-path:
+    session:
+      timeout: 36000
 logging:
   level:
 
