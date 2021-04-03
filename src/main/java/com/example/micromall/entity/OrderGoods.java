@@ -3,6 +3,7 @@ package com.example.micromall.entity;
 import com.example.micromall.utils.CreateOrder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,7 +38,7 @@ public class OrderGoods {
 
     private Date updateTime;
 
-    @JsonIgnoreProperties(value = {"id"})
+    @JsonIgnore
     @ManyToOne
     private Product product;
 

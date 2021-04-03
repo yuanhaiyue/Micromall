@@ -42,20 +42,16 @@ public class OrderService {
         Contact contact=contactRepository.selectById(createOrder.getContactId());
         Set<CreateOrder.OrderCreateGoods> orderCreateGoods =CreateOrder.OrderCreateGoods.getCreateGoods(createOrder.getGoods(),productRepository);
         User user=userRepository.findById(contact.getUserId()).get();
-        Orders orders=new Orders(contact,orderCreateGoods,user);
+        Orders orders=Orders.getOrders(contact,orderCreateGoods,user);
         orders.setNote(createOrder.getNote());
         Orders ordersTwo=repository.save(orders);
-//        orderGoodsRepository.saveAll(orders.getOrderGoods());
         if (ordersTwo!=null){
             return JSONResult.ok("","创建成功");
         }
         return JSONResult.errorMsg("创建失败");
 
     }
-//    public List<Orders> selectList(Integer buyerId){
-//        return repository.findByBuyer_Id(buyerId);
-//
-//    }
+
 
     public JSONResult selectList(){
         List<Orders> ordersList=repository.findByBuyer_Id(1);
@@ -65,7 +61,7 @@ public class OrderService {
             orderGoods.forEach(x->{
                 x.getOrdersProductId();
                 Map<String,Object> productMap=new HashMap<>();
-                productMap.put("productId",x.getProduct().getId() );
+                productMap.put("product_id",x.getProduct().getId() );
                 productMap.put("image", x.getProduct().getImage());
                 x.setGoods(productMap);
             });
@@ -82,7 +78,7 @@ public class OrderService {
             orderGoods.forEach(x->{
                 x.getOrdersProductId();
                 Map<String,Object> productMap=new HashMap<>();
-                productMap.put("productId",x.getProduct().getId() );
+                productMap.put("product_id",x.getProduct().getId() );
                 productMap.put("image", x.getProduct().getImage());
                 productMap.put("name", x.getProduct().getName());
                 x.setGoods(productMap);

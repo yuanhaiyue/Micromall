@@ -3,6 +3,7 @@ package com.example.micromall.service;
 
 
 
+import com.example.micromall.Vo.UserVo;
 import com.example.micromall.entity.User;
 import com.example.micromall.repository.UserRepository;
 
@@ -10,8 +11,7 @@ import com.example.micromall.repository.UserRepository;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +30,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user){
+    public User createUser(User user,HttpSession session){
         if (StringUtils.isEmpty(user.getName())){
 
             throw new RuntimeException("用户名为空");
@@ -38,15 +38,21 @@ public class UserService {
         if (StringUtils.isEmpty(user.getPassword())){
             throw new RuntimeException("密码不能为空");
         }
-       return userRepository.save(user);
+
+        User userOne= userRepository.save(user);
+        UserVo userVo=new UserVo(userOne.getId(),userOne.getName());
+        session.setAttribute("user", userVo);
+        return userOne;
     }
 
 
-    public User loginUser(String name,String password){
+    public User loginUser(String name, String password, HttpSession session){
         User user=userRepository.findByNameAndPassword(name, password);
         if (user==null){
             throw new RuntimeException("用户名或密码错误");
         }
+        UserVo userVo=new UserVo(user.getId(),user.getName());
+        session.setAttribute("user", userVo);
         return user;
     }
 
@@ -57,21 +63,17 @@ public class UserService {
         map.put("state", 200);
         return map;
     }
-
-//    @PostConstruct
-//    public void init(){
-//        List<User> list=new ArrayList<>();
-//        list.add(new User("林森","linsen"));
-//        list.add(new User("廖孔杰","lkj"));
-//        list.add(new User("蔡浩浩","chh"));
-//        list.add(new User("赵sb","zyb"));
-//        userRepository.saveAll(list);
-//    }
+    public void logout(HttpSession session){
+        session.removeAttribute("user");
+    }
 
     public List<User> select(){
         return userRepository.findAll();
     }
 
+    public UserVo user(HttpSession session){
+        return (UserVo) session.getAttribute("user");
+    }
 
 
 }

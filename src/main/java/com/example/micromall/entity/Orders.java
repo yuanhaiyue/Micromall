@@ -61,9 +61,9 @@ public class Orders {
 //    @ManyToOne
 //    private Product product;
 
-    public Orders(Contact contact, Set<CreateOrder.OrderCreateGoods> orderCreateGoods, User user){
+    public Orders(Contact contact, Set<OrderGoods> orderGoods, User user){
         this.buyer=user;
-        Set<OrderGoods> orderGoods=OrderGoods.setOrderGoods(orderCreateGoods);
+
         this.orderGoods=orderGoods;
         this.price=orderGoods.stream().mapToInt(x->x.getPrice()*x.getCount()).sum();
         this.contactName=contact.getName();
@@ -75,7 +75,13 @@ public class Orders {
         this.createTime=new Date(System.currentTimeMillis());
         this.updateTime=null;
     }
+    public static Orders getOrders(Contact contact, Set<CreateOrder.OrderCreateGoods> orderCreateGoods, User user){
 
+        Set<OrderGoods> orderGoods=OrderGoods.setOrderGoods(orderCreateGoods);
+        Orders orders=new Orders(contact,orderGoods,user);
+        orderGoods.forEach(x->x.setOrders(orders));
+        return orders;
+    }
     public Orders() {
 
     }

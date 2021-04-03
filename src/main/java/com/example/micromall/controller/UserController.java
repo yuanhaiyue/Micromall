@@ -1,5 +1,6 @@
 package com.example.micromall.controller;
 
+import com.example.micromall.Vo.UserVo;
 import com.example.micromall.entity.User;
 import com.example.micromall.service.UserService;
 import com.example.micromall.utils.Create;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
@@ -34,24 +36,25 @@ public class UserController {
 
     @GetMapping("/user")
     public JSONResult loginMsg(HttpSession session){
-        return JSONResult.ok();
+        return JSONResult.ok(new LoginVo(userService.user(session),session.getId()),"");
     }
 
 
     @PostMapping("/login")
     public JSONResult loginUser(String name, String password, HttpSession session){
-        return JSONResult.ok(new LoginVo(userService.loginUser(name, password),session.getId()),"登录成功");
+        return JSONResult.ok(new LoginVo(userService.loginUser(name, password,session),session.getId()),"登录成功");
     }
 
     @GetMapping("/logout")
-    public LogoutResult logoutUser(HttpSession session){
+    public LogoutResult logoutUser(HttpServletRequest request){
+        userService.logout(request.getSession());
         return LogoutResult.logout("退出登录成功");
     }
 
 
     @PostMapping("/register")
     public JSONResult registerUser(@RequestBody @Validated(value = Create.class) User user,HttpSession session){
-        return JSONResult.ok(LoginVo.information(  userService.createUser(user),session.getId()),"注册成功");
+        return JSONResult.ok(LoginVo.information(  userService.createUser(user,session),session.getId()),"注册成功");
     }
     @PostMapping("/cancellation")
     public Map<String,Object> cancellationUser(@RequestBody @Validated(value = Update.class) User user){
@@ -77,7 +80,11 @@ public class UserController {
             this.username=user.getName();
             this.sessionId=sessionId;
         }
-
+        public LoginVo(UserVo user, String sessionId){
+            this.id=user.getId();
+            this.username=user.getName();
+            this.sessionId=sessionId;
+        }
     }
 
 }

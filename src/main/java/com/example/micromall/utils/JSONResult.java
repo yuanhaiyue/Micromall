@@ -71,8 +71,8 @@ public class JSONResult {
         return new JSONResult(555, msg, null);
     }
     
-    public static JSONResult errorUserQQ(String msg) {
-        return new JSONResult(556, msg, null);
+    public static JSONResult errorUser(String msg) {
+        return new JSONResult(300, msg, null);
     }
 
     public JSONResult() {
