@@ -18,7 +18,7 @@ public class NewsResult {
     }
 
     public static NewsResult ok(Object message){
-        return new NewsResult(200, message);
+        return new NewsResult(1, message);
     }
 
 

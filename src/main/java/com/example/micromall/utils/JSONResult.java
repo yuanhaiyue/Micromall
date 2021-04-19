@@ -56,7 +56,7 @@ public class JSONResult {
     }
     
     public static JSONResult errorMsg(String msg) {
-        return new JSONResult(400, msg, "");
+        return new JSONResult(0, msg, "");
     }
     
     public static JSONResult errorMap(Object data) {
@@ -72,7 +72,7 @@ public class JSONResult {
     }
     
     public static JSONResult errorUser(String msg) {
-        return new JSONResult(300, msg, null);
+        return new JSONResult(2, msg, null);
     }
 
     public JSONResult() {
@@ -93,12 +93,12 @@ public class JSONResult {
     }
 
     public JSONResult(Object data) {
-        this.code = 200;
+        this.code = 1;
         this.msg = "OK";
         this.data = data;
     }
     public JSONResult(Object data,String msg) {
-        this.code = 200;
+        this.code = 1;
         this.msg = "OK";
         this.data = data;
         this.msg=msg;

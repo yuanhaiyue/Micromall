@@ -59,7 +59,7 @@ public class ContactController {
         return contactService.delete(id);
     }
 
-    @GetMapping("/dev")
+    @GetMapping("/def")
     public JSONResult devContact(){
         return JSONResult.ok(contactService.getDev(1));
     }

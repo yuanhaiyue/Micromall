@@ -4,10 +4,12 @@ package com.example.micromall.service;
 
 
 import com.example.micromall.Vo.UserVo;
+import com.example.micromall.controller.UserController;
 import com.example.micromall.entity.User;
 import com.example.micromall.repository.UserRepository;
 
 
+import com.example.micromall.utils.JSONResult;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -46,21 +48,21 @@ public class UserService {
     }
 
 
-    public User loginUser(String name, String password, HttpSession session){
+    public JSONResult loginUser(String name, String password, HttpSession session){
         User user=userRepository.findByNameAndPassword(name, password);
         if (user==null){
-            throw new RuntimeException("用户名或密码错误");
+           return JSONResult.errorMsg("账号或密码错误");
         }
         UserVo userVo=new UserVo(user.getId(),user.getName());
         session.setAttribute("user", userVo);
-        return user;
+        return JSONResult.ok(new UserController.LoginVo(user,session.getId()),"登录成功");
     }
 
     public Map<String,Object> delete(User user){
         userRepository.delete(user);
         Map<String,Object> map=new HashMap<>();
         map.put("msg", "账号已注销");
-        map.put("state", 200);
+        map.put("state", 1);
         return map;
     }
     public void logout(HttpSession session){

@@ -34,12 +34,12 @@ public class NewsService {
     }
 
 
-    public News selectNewsId(Integer id){
+    public List<News> selectNewsId(Integer id){
         QueryWrapper<News> queryWrapper=new QueryWrapper<>();
         queryWrapper.select("image","id","title","hits","create_time","content").eq("id", id);
-        News news= newsRepository.selectOne(queryWrapper);
+        List<News> news= newsRepository.selectList(queryWrapper);
         UpdateWrapper<News> updateWrapper=new UpdateWrapper<>();
-        updateWrapper.set("hits",news.getHits()+1).eq("id", id);
+        updateWrapper.set("hits",news.get(0).getHits()+1).eq("id", id);
         newsRepository.update(null,updateWrapper);
         return news;
     }

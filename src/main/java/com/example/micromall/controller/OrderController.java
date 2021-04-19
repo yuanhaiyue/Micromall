@@ -11,6 +11,7 @@ import com.example.micromall.utils.JSONResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,8 +41,8 @@ public class OrderController {
     }
 
     @GetMapping("/list")
-    public JSONResult selectList(){
-        return orderService.selectList();
+    public JSONResult selectList(HttpSession session){
+        return orderService.selectList(session);
     }
 
     @PostMapping("/delete")

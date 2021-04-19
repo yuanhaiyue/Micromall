@@ -41,8 +41,8 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public JSONResult loginUser(String name, String password, HttpSession session){
-        return JSONResult.ok(new LoginVo(userService.loginUser(name, password,session),session.getId()),"登录成功");
+    public JSONResult loginUser(@RequestBody LoginUser loginUser, HttpSession session){
+        return userService.loginUser(loginUser.getUsername(), loginUser.getPassword(),session);
     }
 
     @GetMapping("/logout")
@@ -67,7 +67,7 @@ public class UserController {
 
 
     @Data
-    private static class LoginVo{
+    public static class LoginVo{
         private String sessionId;
         private Integer id;
         private String username;
@@ -86,5 +86,9 @@ public class UserController {
             this.sessionId=sessionId;
         }
     }
-
+    @Data
+    private static class LoginUser{
+        private String username;
+        private String password;
+    }
 }

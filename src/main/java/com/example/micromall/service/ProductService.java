@@ -24,8 +24,10 @@ public class ProductService {
 //    public List<ProductVo> selectProduct(Integer subCategoryId){
 //        return productRepository.selectBySubCategoryId(subCategoryId);
 //    }
+
     public Set<Product> selectProduct(Integer subCategoryId){
-        return productRepository.findProductBySubCategoryId(subCategoryId);
+        Set<Product> products= productRepository.findProductBySubCategoryId(subCategoryId);
+        return products;
     }
 
     public Product selectProductById(Integer productId){

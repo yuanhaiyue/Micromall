@@ -6,7 +6,10 @@ import com.example.micromall.entity.Product;
 import com.example.micromall.service.ProductService;
 import com.example.micromall.utils.JSONResult;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,29 +34,34 @@ public class ProductController {
         this.productService = productService;
     }
 
-//    @GetMapping("/list")
-//    public List<ProductVo> selectBySubCategoryId(Integer subCategoryId,@RequestParam(value = "last_id",defaultValue = "0") Integer lastId){
-//        return productService.selectProduct(subCategoryId);
+
+    @GetMapping("/list")
+    public JSONResult selectSubCategoryId(@RequestParam("category_id") Integer subCategoryId, @RequestParam("last_id") Integer lastId){
+        return JSONResult.ok(productService.selectProduct(subCategoryId).stream().map(ProductVo::change).collect(Collectors.toSet()),"");
+    }
+
+
+//    @GetMapping("/lists")
+//    public JSONResult selectSubCategoryId(Integer category_id){
+//
+//        return JSONResult.ok(productService.selectProduct(category_id).stream().map(ProductVo::change).collect(Collectors.toList() ),"");
 //    }
 
 
-    @GetMapping("/list")
-    public JSONResult selectBySubCategoryId(@RequestParam(value = "sub_category_id") Integer subCategoryId, @RequestParam(value = "last_id",defaultValue = "0") Integer lastId){
-        return JSONResult.ok(productService.selectProduct(subCategoryId).stream().map(ProductVo::change));
-    }
 
     @GetMapping("/details")
-    public JSONResult selectById(Integer productId){
-        return JSONResult.ok(productService.selectProductById(productId),"");
+    public JSONResult selectById(@RequestParam(value = "id") Integer productId){
+        return JSONResult.ok(productService.selectProductById(productId));
     }
 
     @GetMapping("/cart")
-    public JSONResult selectByIds(Integer [] productId){
-        return JSONResult.ok(productService.getProduct(productId).stream().map(ProductVo::changeTwo).collect(Collectors.toSet()),"");
+    public JSONResult selectByIds(@RequestParam(value = "ids") Integer [] productId){
+        return JSONResult.ok(productService.getProduct(productId).stream().map(ProductVo::changeTwo).collect(Collectors.toSet()));
     }
 
-    @Data
-    private static class ProductVo {
+    @Setter
+    @Getter
+    public static class ProductVo {
 
 
         private Integer id;
@@ -73,7 +81,7 @@ public class ProductController {
         private Date updateTime;
 
         public ProductVo(Integer id, Integer subCategoryId, Integer price, Integer num, Integer status, Product product){
-            this(product.getName(),product.getSellPoint(),product.getImage(),product.getContent(),product.getAlbum().get(0).getImg());
+            this(product.getName(),product.getSellPoint(),product.getImage(),product.getContent(),product.getAlbum().size()!=0?product.getAlbum().get(0).getImg():"");
 
             this.id=id;
             this.subCategoryId=subCategoryId;
@@ -101,7 +109,8 @@ public class ProductController {
         public static ProductVo change(Product product){
             product.setContent("");
             product.setSellPoint("");
-            return new ProductVo(product);
+            ProductVo p=new ProductVo(product);
+            return p;
         }
         public static ProductVo changeTwo(Product product){
             return new ProductVo(product);

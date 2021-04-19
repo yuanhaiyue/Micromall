@@ -21,11 +21,6 @@ public  class CreateOrder{
     private Integer contactId;
     private String note;
     private Set<Goods> goods;
-
-
-
-
-
     @Data
     public static class Goods{
         private Integer id;

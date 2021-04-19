@@ -32,7 +32,6 @@ public class Category {
 
     private String image;
 
-
     @OneToMany(mappedBy = "category")
-    Set<SubCategory> subCategories;
+    Set<SubCategory> sub;
 }

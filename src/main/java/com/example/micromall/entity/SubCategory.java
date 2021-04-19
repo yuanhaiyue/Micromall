@@ -17,6 +17,7 @@ import javax.validation.constraints.Null;
 @Getter
 @Setter
 @Entity
+@Table(name = "sub_category")
 public class SubCategory {
     @NotNull(groups = Update.class)
     @Null(groups = Create.class)

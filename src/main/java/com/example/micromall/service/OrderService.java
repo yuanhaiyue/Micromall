@@ -1,6 +1,7 @@
 package com.example.micromall.service;
 
 
+import com.example.micromall.Vo.UserVo;
 import com.example.micromall.controller.OrderController;
 import com.example.micromall.entity.*;
 import com.example.micromall.repository.*;
@@ -12,6 +13,7 @@ import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -53,8 +55,9 @@ public class OrderService {
     }
 
 
-    public JSONResult selectList(){
-        List<Orders> ordersList=repository.findByBuyer_Id(1);
+    public JSONResult selectList(HttpSession session){
+        UserVo userVo=(UserVo) session.getAttribute("user");
+        List<Orders> ordersList=repository.findByBuyer_Id(userVo.getId());
         for (Orders o:ordersList){
             o.getBuyersId();
             Set<OrderGoods> orderGoods=o.getOrderGoods();
