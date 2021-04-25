@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import java.util.Set;
 
 /**
  * @author 14760
@@ -28,5 +29,7 @@ public class Carousel {
 
     private String link;
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "carousel")
+    private Set<CarouselImage> carouselImages;
 
 }

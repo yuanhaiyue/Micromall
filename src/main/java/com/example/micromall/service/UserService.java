@@ -67,6 +67,7 @@ public class UserService {
     }
     public void logout(HttpSession session){
         session.removeAttribute("user");
+        session.invalidate();
     }
 
     public List<User> select(){

@@ -2,21 +2,15 @@ package com.example.micromall.service;
 
 
 import com.example.micromall.Vo.UserVo;
-import com.example.micromall.controller.OrderController;
 import com.example.micromall.entity.*;
 import com.example.micromall.repository.*;
 import com.example.micromall.utils.CreateOrder;
 import com.example.micromall.utils.JSONResult;
-import com.example.micromall.utils.Results;
-import lombok.Data;
-import org.hibernate.annotations.NotFound;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+
 
 /**
  * @author 14760
@@ -47,6 +41,7 @@ public class OrderService {
         Orders orders=Orders.getOrders(contact,orderCreateGoods,user);
         orders.setNote(createOrder.getNote());
         Orders ordersTwo=repository.save(orders);
+
         if (ordersTwo!=null){
             return JSONResult.ok("","创建成功");
         }

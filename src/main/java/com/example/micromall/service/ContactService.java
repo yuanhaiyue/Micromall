@@ -2,6 +2,7 @@ package com.example.micromall.service;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.micromall.Vo.UserVo;
 import com.example.micromall.entity.Contact;
 import com.example.micromall.entity.User;
 import com.example.micromall.repository.ContactRepository;
@@ -29,7 +30,8 @@ public class ContactService {
         this.userRepository = userRepository;
     }
 
-    public List<Contact> selectAll(Integer id){
+    public List<Contact> selectAll(HttpSession session){
+        Integer id=((UserVo) session.getAttribute("user")).getId();
         Map<String,Object> map=new HashMap<>(1);
         map.put("user_id", id);
         return contactRepository.selectByMap(map);
@@ -37,7 +39,8 @@ public class ContactService {
     }
 
     public JSONResult createContact(Contact contact, HttpSession session){
-        contact.setUserId(1);
+        Integer id=((UserVo) session.getAttribute("user")).getId();
+        contact.setUserId(id);
         contact.setCreateTime(new Date(System.currentTimeMillis()));
         int cnt=contactRepository.insert(contact);
         Map<String,Object> map=new HashMap<>();

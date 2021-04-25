@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class OrderController {
         this.orderService = orderService;
     }
     @PostMapping("/create")
-    public JSONResult createOrder(@RequestBody @Validated CreateOrder createOrder){
+    public JSONResult createOrder(@RequestBody @Valid CreateOrder createOrder){
         return orderService.createOrder(createOrder);
     }
 

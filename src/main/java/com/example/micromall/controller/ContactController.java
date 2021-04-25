@@ -34,8 +34,8 @@ public class ContactController {
     }
 
     @GetMapping("/list")
-    public JSONResult selectAll(Integer userId){
-        return JSONResult.ok(contactService.selectAll(userId));
+    public JSONResult selectAll(HttpSession session){
+        return JSONResult.ok(contactService.selectAll(session));
     }
 
 
